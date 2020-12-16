@@ -1,0 +1,19 @@
+.post {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 15px 0px;
+}
+
+.post:first-child {
+    margin: 15px 0px 15px 0px;
+}
+
+.post img {
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.post_info {
+    padding: 0px 0px 0px 15px;
+}

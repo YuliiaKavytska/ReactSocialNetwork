@@ -1,0 +1,35 @@
+.mainInformation {
+    background: url('https://i.pinimg.com/originals/04/ef/5e/04ef5e1743f2123165f573616c533885.jpg') center / cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+}
+
+.mainInfoBlock {
+    display: flex;
+    position: absolute;
+    padding: 0 15px;
+    width: 100%;
+    height: 150px;
+    min-height: 150px;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.mainInformation img {
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.information {
+    align-self: center;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    font-size: 16px;
+    margin: 0px 0px 0px 10px;
+}
+
+.information p {
+    margin: 5px 0;
+}
