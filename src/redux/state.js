@@ -1,4 +1,8 @@
-import {createEntirePage} from "../render";
+// import {createEntirePage} from "../render";
+
+let createEntirePage = () => {
+    console.log('hi');
+}
 
 let state = {
     profilePage: {
@@ -45,7 +49,9 @@ let state = {
     }
 }
 
-export let addNewPost = () => {
+window.state = state;
+
+export const addNewPost = () => {
     let newPost = {
         id: state.profilePage.posts.length + 1,
         message: state.profilePage.newPostText,
@@ -57,26 +63,31 @@ export let addNewPost = () => {
     createEntirePage(state);
 }
 
-export let updateNewPostText = (text) => {
+export const updateNewPostText = (text) => {
     state.profilePage.newPostText = text;
     createEntirePage(state);
 }
 
-export let updateMessageText = (text) => {
+export const updateMessageText = (text) => {
     state.dialogsPage.newMessageText = text;
     createEntirePage(state);
 }
 
-export let sendMessage = () => {
+export const sendMessage = () => {
     let message = {
         id: state.dialogsPage.messages.length + 1,
         sender: 1,
         name: 'Yuliia',
         message: state.dialogsPage.newMessageText
     }
+
     state.dialogsPage.messages.push(message);
     state.dialogsPage.newMessageText = '';
     createEntirePage(state);
+}
+
+export const subscribe = (observer) => {
+    createEntirePage = observer;
 }
 
 export default state;

@@ -25,10 +25,12 @@ const Dialogs = (props) => {
                 ))}
             </div>
             <div className={s.messages_block}>
-                <div className={s.messages}>
-                    {messages.map((item) => (
-                        <Message key={item.id + item.message} message={item} />
-                    ))}
+                <div className={s.messages_container}>
+                    <div className={s.messages}>
+                        {messages.map((item) => (
+                            <Message key={item.id + item.message} message={item} />
+                        ))}
+                    </div>
                 </div>
                 <div className={s.new_message}>
                     <textarea
