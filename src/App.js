@@ -9,6 +9,7 @@ import {Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
+import store from "./redux/state";
 
 const App = (props) => {
     return (
@@ -19,16 +20,14 @@ const App = (props) => {
                 <Route path='/dialogs'
                        render={() => <Dialogs
                            state={props.state.dialogsPage}
-                           updateMessageText={props.updateMessageText}
-                           sendMessage={props.sendMessage}
+                           dispatch={props.dispatch}
                        />}
-
                 />
                 <Route path='/profile'
                        render={() => <Profile
                            state={props.state.profilePage}
-                           addNewPost={props.addNewPost}
-                           updateNewPostText={props.updateNewPostText}/>}
+                           dispatch={props.dispatch}
+                       />}
                 />
                 <Route path='/news' render={() => <News/>}/>
                 <Route path='/music' render={() => <Music/>}/>
