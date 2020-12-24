@@ -6,16 +6,16 @@ import {addMessageActionCreator, updateMessageActionCreator} from "../../redux/d
 
 const Dialogs = (props) => {
 
-    let {dialogs, messages} = props.state;
+    let {dialogs, messages, newMessageText} = props;
     let inputMessage = React.createRef();
 
-    let addNewMessage = (e) => {
-        props.dispatch(addMessageActionCreator());
+    let addNewMessage = () => {
+        props.addMessage();
     }
 
-    let changeMessageText = (e) => {
+    let changeMessageText = () => {
         let messageText = inputMessage.current.value;
-        props.dispatch(updateMessageActionCreator(messageText))
+        props.changeMessageText(messageText);
     }
 
     return (
@@ -37,7 +37,7 @@ const Dialogs = (props) => {
                     <textarea
                         ref={inputMessage}
                         placeholder='Type some text'
-                        value={props.state.newMessageText}
+                        value={newMessageText}
                         onChange={changeMessageText}
                     />
                     <button onClick={addNewMessage}>Add New</button>

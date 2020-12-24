@@ -4,11 +4,11 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 const App = (props) => {
     return (
@@ -17,16 +17,10 @@ const App = (props) => {
             <Aside state={props.state.aside}/>
             <main className='main'>
                 <Route path='/dialogs'
-                       render={() => <Dialogs
-                           state={props.state.dialogsPage}
-                           dispatch={props.dispatch}
-                       />}
+                       render={() => <DialogsContainer store={props.store} />}
                 />
                 <Route path='/profile'
-                       render={() => <Profile
-                           state={props.state.profilePage}
-                           dispatch={props.dispatch}
-                       />}
+                       render={() => <Profile  store={props.store} />}
                 />
                 <Route path='/news' render={() => <News/>}/>
                 <Route path='/music' render={() => <Music/>}/>
