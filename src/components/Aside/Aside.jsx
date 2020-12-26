@@ -26,19 +26,23 @@ const Aside = (props) => {
                     <li className={s.item}>
                         <p className={s.fav_title}>Favorite users:</p>
                         <ul className={s.favorite}>
-                            {favUsers.map((item) => (
-                                <li className={s.fav_item}>
-                                    <img
-                                        src="https://illustrators.ru/uploads/illustration/image/1137533/square_kotya.jpg"
-                                        alt=""/>
-                                    <a>{item.name}</a>
-                                </li>
-                            ))}
+                            {favUsers.map((item, index) => <FavUser key={index} item={item} />)}
                         </ul>
                     </li>
                 </ul>
             </nav>
         </aside>
+    );
+}
+
+const FavUser = (props) => {
+    return (
+        <li className={s.fav_item}>
+            <img
+                src="https://illustrators.ru/uploads/illustration/image/1137533/square_kotya.jpg"
+                alt=""/>
+            <a>{props.item.name}</a>
+        </li>
     );
 }
 

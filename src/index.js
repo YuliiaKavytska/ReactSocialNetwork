@@ -8,7 +8,7 @@ import App from "./App";
 import './index.css';
 import {Provider} from "react-redux";
 
-let createEntirePage = () => {
+// let createEntirePage = () => {
     ReactDOM.render(
         <BrowserRouter>
             <React.StrictMode>
@@ -19,13 +19,13 @@ let createEntirePage = () => {
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
+// }
 
-createEntirePage();
+//createEntirePage();
 
-store.subscribe(() => {
-    createEntirePage();
-});
+// store.subscribe(() => {
+//     createEntirePage();
+// });
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
