@@ -6,23 +6,25 @@ import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import './index.css';
+import {Provider} from "./StoreContext";
 
-let createEntirePage = (state) => {
+let createEntirePage = () => {
     ReactDOM.render(
         <BrowserRouter>
             <React.StrictMode>
-                <App state={state} />
+                <Provider store={store}>
+                    <App/>
+                </Provider>
             </React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-createEntirePage(store.getState());
+createEntirePage();
 
 store.subscribe(() => {
-    let state = store.getState();
-    createEntirePage(state);
+    createEntirePage();
 });
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,8 +1,7 @@
-import {combineReducers} from "redux";
+import {combineReducers, createStore} from "redux";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import asideReducer from "./aside-reducer";
-const {createStore} = require("redux");
 
 let reducersBatch = combineReducers({
     profilePage: profileReducer,
