@@ -6,14 +6,14 @@ import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import './index.css';
-import {Provider} from "./StoreContext";
+import {Provider} from "react-redux";
 
 let createEntirePage = () => {
     ReactDOM.render(
         <BrowserRouter>
             <React.StrictMode>
                 <Provider store={store}>
-                    <App/>
+                    <App store={store}/>
                 </Provider>
             </React.StrictMode>
         </BrowserRouter>,

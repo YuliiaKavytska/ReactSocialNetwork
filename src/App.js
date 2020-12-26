@@ -14,7 +14,7 @@ const App = (props) => {
     return (
         <div className='container'>
             <Header/>
-            <Aside />
+            <Aside store={props.store}/>
             <main className='main'>
                 <Route path='/dialogs' render={() => <DialogsContainer />} />
                 <Route path='/profile' render={() => <Profile />} />
