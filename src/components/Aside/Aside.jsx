@@ -24,11 +24,15 @@ const Aside = (props) => {
                         <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
                     </li>
                     <li className={s.item}>
+                        <NavLink to='/search' activeClassName={s.active}>Search more</NavLink>
+                    </li>
+                    <li className={s.item}>
                         <p className={s.fav_title}>Favorite users:</p>
                         <ul className={s.favorite}>
                             {favUsers.map((item, index) => <FavUser key={index} item={item} />)}
                         </ul>
                     </li>
+
                 </ul>
             </nav>
         </aside>

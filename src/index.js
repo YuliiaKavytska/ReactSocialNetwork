@@ -11,11 +11,9 @@ import {Provider} from "react-redux";
 // let createEntirePage = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <React.StrictMode>
-                <Provider store={store}>
-                    <App store={store}/>
-                </Provider>
-            </React.StrictMode>
+            <Provider store={store}>
+                <App store={store}/>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

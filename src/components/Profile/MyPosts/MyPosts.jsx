@@ -6,12 +6,12 @@ const MyPosts = (props) => {
     let newPostText = React.createRef();
 
     let addNewPost = () => {
-        props.addNewPost();
+        props.addPost();
     }
     
     let onChangePost = () => {
         let text = newPostText.current.value;
-        props.updateNewPostText(text);
+        props.updatePost(text);
     }
 
     return (
