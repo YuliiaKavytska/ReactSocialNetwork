@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './Search.module.css';
-
 import userPhoto from '../../assets/images/photo.png';
 import {NavLink} from "react-router-dom";
+import {usersAPI} from "../../api/api";
 
 const User = (props) => {
     let {totalUserCount, pageSize, users, currentPage} = props.searchPage;
@@ -12,6 +12,22 @@ const User = (props) => {
 
     for (let i = 1; i <= pagesCount; i++) {
         pagination.push(i);
+    }
+
+    let followUser = (id) => {
+        usersAPI.followUser(id).then(data => {
+                if (data.resultCode === 0) {
+                    props.follow(id);
+                }
+            })
+    }
+
+    let unfollowUser = (id) => {
+        usersAPI.unfollowUser(id).then(data => {
+                if (data.resultCode === 0) {
+                    props.unfollow(id);
+                }
+            })
     }
 
     return <div className={s.wrapper}>
@@ -42,8 +58,8 @@ const User = (props) => {
                             <div className={s.status}>{user.status}</div>
                             {user.followed
                                 ?
-                                <button className={s.follow} onClick={() => (props.unfollow(user.id))}>Unfollow</button>
-                                : <button className={s.follow} onClick={() => (props.follow(user.id))}>Follow</button>}
+                                <button className={s.follow} onClick={() => unfollowUser(user.id)}>Unfollow</button>
+                                : <button className={s.follow} onClick={() => followUser(user.id)}>Follow</button>}
                         </div>
                         <div className={s.location}>
                             <div className={s.country}>{'user.location.country'}</div>

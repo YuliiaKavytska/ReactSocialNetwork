@@ -4,15 +4,19 @@ import * as axios from "axios";
 import {connect} from "react-redux";
 import {addPost, setUserProfile, updatePost} from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
+import {withRouter} from 'react-router';
+import {profileAPI} from "../../api/api";
 
 class ProfileContainer extends React.PureComponent {
     componentDidMount() {
         if (!this.props.isFetching) {
             this.props.setFetching();
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
+        let userId = this.props.match.params.user_id;
+        if (!userId) userId = 2;
+        // 13886
+        profileAPI.getUserProfile(userId).then(data => {
+                this.props.setUserProfile(data);
                 this.props.setFetching();
             });
     }
@@ -26,4 +30,6 @@ const mapStateToProps = (state) => ({profile: state.profilePage.profile, isFetch
 
 let dispatchToProps = {addPost, updatePost, setUserProfile, setFetching};
 
-export default connect(mapStateToProps, dispatchToProps)(ProfileContainer);
+let withUrlDataContainerComponent = withRouter(ProfileContainer);
+
+export default connect(mapStateToProps, dispatchToProps)(withUrlDataContainerComponent);
