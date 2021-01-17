@@ -5,6 +5,7 @@ import {
     setFetching,
     setTotalCount,
     setUsers,
+    toggleFollowing,
     unfollow
 } from "../../redux/search-reducer";
 import {connect} from "react-redux";
@@ -46,6 +47,7 @@ class UsersContainer extends React.PureComponent {
                     updatePage={this.updatePage}
                     follow={this.props.follow}
                     unfollow={this.props.unfollow}
+                    toggleFollowing={this.props.toggleFollowing}
                 />
             }
         </div>;
@@ -65,6 +67,7 @@ const dispatchToProps = {
     setCurrentPage,
     setTotalCount,
     setFetching,
+    toggleFollowing
 };
 
 export default connect(mapStateToProps, dispatchToProps)(UsersContainer);

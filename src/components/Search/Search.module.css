@@ -64,6 +64,10 @@
     white-space: nowrap;
 }
 
+.follow[disabled] {
+    background: #7384a7;
+}
+
 .location {
     align-self: center;
 }

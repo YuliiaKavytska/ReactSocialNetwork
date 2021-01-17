@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
 const User = (props) => {
-    let {totalUserCount, pageSize, users, currentPage} = props.searchPage;
+    let {totalUserCount, pageSize, users, currentPage, isFollowing} = props.searchPage;
 
     let pagesCount = Math.ceil(totalUserCount / pageSize);
     let pagination = [];
@@ -15,18 +15,22 @@ const User = (props) => {
     }
 
     let followUser = (id) => {
+        props.toggleFollowing(id, true);
         usersAPI.followUser(id).then(data => {
                 if (data.resultCode === 0) {
                     props.follow(id);
                 }
+            props.toggleFollowing(id, false);
             })
     }
 
     let unfollowUser = (id) => {
+        props.toggleFollowing(id, true);
         usersAPI.unfollowUser(id).then(data => {
                 if (data.resultCode === 0) {
                     props.unfollow(id);
                 }
+            props.toggleFollowing(id, false);
             })
     }
 
@@ -47,7 +51,7 @@ const User = (props) => {
             </div>
             <div className={s.users}>
                 {users.map(user => (
-                    <div className={s.user_item}>
+                    <div key={user.id} className={s.user_item}>
                         <div className={s.image_cont}>
                             <NavLink to={'/profile/' + user.id}>
                                 <img src={userPhoto || user.photos.small} alt="photo" className={s.user_image}/>
@@ -58,8 +62,16 @@ const User = (props) => {
                             <div className={s.status}>{user.status}</div>
                             {user.followed
                                 ?
-                                <button className={s.follow} onClick={() => unfollowUser(user.id)}>Unfollow</button>
-                                : <button className={s.follow} onClick={() => followUser(user.id)}>Follow</button>}
+                                <button
+                                    className={s.follow}
+                                    onClick={() => unfollowUser(user.id)}
+                                    disabled={isFollowing.some(e => e === user.id)}
+                                >Unfollow</button>
+                                : <button
+                                    className={s.follow}
+                                    onClick={() => followUser(user.id)}
+                                    disabled={isFollowing.some(e => e === user.id)}
+                                >Follow</button>}
                         </div>
                         <div className={s.location}>
                             <div className={s.country}>{'user.location.country'}</div>

@@ -4,6 +4,7 @@ const SET_USERS = 'SET-USERS';
 const UPDATE_PAGE = 'UPDATE-PAGE'
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const SET_LOADING = 'SET_LOADING';
+const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
 
 const initialState = {
     users: [ ],
@@ -11,6 +12,7 @@ const initialState = {
     totalUserCount: 0,
     currentPage: 1,
     isFetching: true,
+    isFollowing: [],
 };
 
 const searchReducer =(state = initialState, action) => {
@@ -46,6 +48,13 @@ const searchReducer =(state = initialState, action) => {
                 ...state,
                 isFetching: !state.isFetching
             }
+        case TOGGLE_FOLLOWING:
+            return {
+                ...state,
+                isFollowing: action.status
+                    ? [...state.isFollowing, action.id]
+                    : [state.isFollowing.filter(e => e !== action.id)]
+            }
         default:
             return state;
     }
@@ -56,6 +65,7 @@ export const unfollow = (id) => ({type: UNFOLLOW, id});
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (page) => ({type: UPDATE_PAGE, page});
 export const setTotalCount = (count) => ({type: SET_TOTAL_COUNT, count});
-export const setFetching = () => ({type: SET_LOADING})
+export const setFetching = () => ({type: SET_LOADING});
+export const toggleFollowing = (id, status) => ({type: TOGGLE_FOLLOWING, id, status});
 
 export default searchReducer;
