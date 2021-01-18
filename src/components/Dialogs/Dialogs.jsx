@@ -3,6 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {addMessageActionCreator, updateMessage, updateMessageActionCreator} from "../../redux/dialogs-reducer";
+import {Redirect} from "react-router";
 
 const Dialogs = (props) => {
 
@@ -17,6 +18,7 @@ const Dialogs = (props) => {
         let messageText = inputMessage.current.value;
         props.updateMessage(messageText);
     }
+
 
     return (
         <div className={s.dialogs}>

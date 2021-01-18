@@ -3,8 +3,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {addPost, getUserProfileThunkCreator, setUserProfile, updatePost} from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
-import {withRouter} from 'react-router';
-import {profileAPI} from "../../api/api";
+import {Redirect, withRouter} from 'react-router';
 
 class ProfileContainer extends React.PureComponent {
     componentDidMount() {
@@ -23,10 +22,20 @@ class ProfileContainer extends React.PureComponent {
     }
 }
 
-const mapStateToProps = (state) => ({profile: state.profilePage.profile, isFetching: state.searchPage.isFetching});
+let AuthRedirectComponent = (props) => {
+    if (!this.props.isAuth) return <Redirect to={'/login'} />;
+
+    return <ProfileContainer {...props} />
+};
+
+const mapStateToProps = (state) => ({
+    profile: state.profilePage.profile,
+    isFetching: state.searchPage.isFetching,
+    isAuth: state.auth.isAuth,
+});
 
 let dispatchToProps = {addPost, updatePost, setUserProfile, setFetching, getUserProfileThunkCreator};
 
-let withUrlDataContainerComponent = withRouter(ProfileContainer);
+let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
 export default connect(mapStateToProps, dispatchToProps)(withUrlDataContainerComponent);
