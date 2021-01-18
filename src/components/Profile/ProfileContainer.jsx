@@ -1,8 +1,7 @@
 import React from 'react';
 import Profile from "./Profile";
-import * as axios from "axios";
 import {connect} from "react-redux";
-import {addPost, setUserProfile, updatePost} from "../../redux/profile-reducer";
+import {addPost, getUserProfileThunkCreator, setUserProfile, updatePost} from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
 import {withRouter} from 'react-router';
 import {profileAPI} from "../../api/api";
@@ -12,13 +11,11 @@ class ProfileContainer extends React.PureComponent {
         if (!this.props.isFetching) {
             this.props.setFetching();
         }
+        // вот для чео нам нужен виз роутер. чтобы получить айди с ссылки и сделать запрос
         let userId = this.props.match.params.user_id;
         if (!userId) userId = 2;
         // 13886
-        profileAPI.getUserProfile(userId).then(data => {
-                this.props.setUserProfile(data);
-                this.props.setFetching();
-            });
+        this.props.getUserProfileThunkCreator(userId);
     }
 
     render() {
@@ -28,7 +25,7 @@ class ProfileContainer extends React.PureComponent {
 
 const mapStateToProps = (state) => ({profile: state.profilePage.profile, isFetching: state.searchPage.isFetching});
 
-let dispatchToProps = {addPost, updatePost, setUserProfile, setFetching};
+let dispatchToProps = {addPost, updatePost, setUserProfile, setFetching, getUserProfileThunkCreator};
 
 let withUrlDataContainerComponent = withRouter(ProfileContainer);
 

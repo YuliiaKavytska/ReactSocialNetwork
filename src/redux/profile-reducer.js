@@ -1,3 +1,6 @@
+import {profileAPI} from "../api/api";
+import {setFetching} from "./search-reducer";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -59,3 +62,11 @@ export const updatePost = (text) => ({type: UPDATE_NEW_POST_TEXT, text: text});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 
 export default profileReducer;
+
+export const getUserProfileThunkCreator = (userId) => (dispatch) => {
+    profileAPI.getUserProfile(userId).then(data => {
+        dispatch(setUserProfile(data));
+        dispatch(setFetching());
+    });
+}
+

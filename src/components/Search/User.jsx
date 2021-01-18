@@ -3,6 +3,7 @@ import s from './Search.module.css';
 import userPhoto from '../../assets/images/photo.png';
 import {NavLink} from "react-router-dom";
 import {usersAPI} from "../../api/api";
+import {setCurrentPage} from "../../redux/search-reducer";
 
 const User = (props) => {
     let {totalUserCount, pageSize, users, currentPage, isFollowing} = props.searchPage;
@@ -14,30 +15,11 @@ const User = (props) => {
         pagination.push(i);
     }
 
-    let followUser = (id) => {
-        props.toggleFollowing(id, true);
-        usersAPI.followUser(id).then(data => {
-                if (data.resultCode === 0) {
-                    props.follow(id);
-                }
-            props.toggleFollowing(id, false);
-            })
-    }
-
-    let unfollowUser = (id) => {
-        props.toggleFollowing(id, true);
-        usersAPI.unfollowUser(id).then(data => {
-                if (data.resultCode === 0) {
-                    props.unfollow(id);
-                }
-            props.toggleFollowing(id, false);
-            })
-    }
-
     return <div className={s.wrapper}>
             <div className={s.pagination}>
                 {pagination.map((i) => (
                     <span
+                        key={i}
                         onClick={(e) => {
                             props.updatePage(i)
                         }}
@@ -61,15 +43,14 @@ const User = (props) => {
                             <div className={s.name}>{user.name}</div>
                             <div className={s.status}>{user.status}</div>
                             {user.followed
-                                ?
-                                <button
+                                ? <button
                                     className={s.follow}
-                                    onClick={() => unfollowUser(user.id)}
+                                    onClick={() =>  props.unfollowUserThunkCreator(user.id)}
                                     disabled={isFollowing.some(e => e === user.id)}
                                 >Unfollow</button>
                                 : <button
                                     className={s.follow}
-                                    onClick={() => followUser(user.id)}
+                                    onClick={() => props.followUserThunkCreator(user.id)}
                                     disabled={isFollowing.some(e => e === user.id)}
                                 >Follow</button>}
                         </div>
