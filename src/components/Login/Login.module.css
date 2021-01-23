@@ -1,0 +1,58 @@
+.login_form {
+    max-width: 50%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.login_title {
+    color: dodgerblue;
+    text-align: center;
+}
+
+.form {
+    margin-top: 10px;
+}
+
+.input_field {
+    padding: 15px 0;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 7px;
+    border: 1px solid dodgerblue;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input:focus {
+    box-shadow: 0px 0px 10px 0px dodgerblue;
+}
+
+.input::placeholder {
+    color: #649bff;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.input_submit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input:focus::placeholder {
+    color: transparent;
+}
+
+.login_button {
+    color: #fff;
+    background-color: dodgerblue;
+    border-radius: 40px;
+    float: right;
+    outline: none;
+    padding: 10px 25px;
+    border: none;
+    font-weight: bold;
+}

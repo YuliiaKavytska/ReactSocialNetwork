@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 // }
 
 let DispatchToProps = {
-    addPost, updatePost
+    addPost
 };
 
 const MyPostsContainer = connect(mapStateToProps, DispatchToProps)(MyPosts);

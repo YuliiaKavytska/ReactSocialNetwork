@@ -15,6 +15,7 @@ const Header = (props) => {
                     {
                         props.isAuth ?
                             <div className={s.login_block}>
+                                <p className={s.options} onClick={() => props.logoutThunkCreator()}>Logout</p>
                                 <p className={s.options}>{props.login}</p>
                                 <div className={s.avatar}>
                                     <img className={s.mini_avatar}

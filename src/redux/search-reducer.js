@@ -13,7 +13,7 @@ const initialState = {
     pageSize: 5,
     totalUserCount: 0,
     currentPage: 1,
-    isFetching: true,
+    isFetching: false,
     isFollowing: [],
 };
 

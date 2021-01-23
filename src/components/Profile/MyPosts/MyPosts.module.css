@@ -6,7 +6,7 @@
     font-weight: 700;
     letter-spacing: 1px;
     font-size: 20px;
-    margin: 15px 0px 0px 0px;
+    margin: 15px 0px 20px 0px;
 }
 
 .new_post {
@@ -14,25 +14,7 @@
     align-items: flex-end;
 }
 
-.new_post textarea {
-    flex-grow: 1;
-    border: 1px solid #649bff;
-    border-radius: 10px;
-    resize: none;
-    min-height: 80px;
-    margin: 20px 10px 0px 0px;
-    padding: 10px;
-    outline: none;
-}
 
-.new_post textarea::placeholder {
-    color: #649bff;
-    transition: all 0.5s ease;
-}
-
-.new_post textarea:focus::placeholder {
-    color: transparent;
-}
 
 .new_post button {
     color: #fff;

@@ -7,7 +7,7 @@ const Post = (props) => {
     return (
         <div>
             {posts.slice(0).reverse().map((item) => (
-                <div className={s.post}>
+                <div key={item.id} className={s.post}>
                     <img src="https://blog.cpanel.com/wp-content/uploads/2019/08/user-01.png" alt=""/>
                     <div className={s.post_info}>
                         <p>{item.message}</p>

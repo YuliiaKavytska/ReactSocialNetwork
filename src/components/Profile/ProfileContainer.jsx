@@ -1,9 +1,16 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {addPost, getUserProfileThunkCreator, setUserProfile, updatePost} from "../../redux/profile-reducer";
+import {
+    addPost,
+    getStatusThunkCreator,
+    getUserProfileThunkCreator,
+    setNewStatusThunkCreator,
+    setUserProfile
+} from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
-import {Redirect, withRouter} from 'react-router';
+import {withRouter} from 'react-router';
+import {compose} from "redux";
 
 class ProfileContainer extends React.PureComponent {
     componentDidMount() {
@@ -15,6 +22,7 @@ class ProfileContainer extends React.PureComponent {
         if (!userId) userId = 2;
         // 13886
         this.props.getUserProfileThunkCreator(userId);
+        this.props.getStatusThunkCreator(userId);
     }
 
     render() {
@@ -22,20 +30,27 @@ class ProfileContainer extends React.PureComponent {
     }
 }
 
-let AuthRedirectComponent = (props) => {
-    if (!this.props.isAuth) return <Redirect to={'/login'} />;
-
-    return <ProfileContainer {...props} />
-};
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 const mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
-    isFetching: state.searchPage.isFetching,
-    isAuth: state.auth.isAuth,
+    status: state.profilePage.status,
+    isFetching: state.searchPage.isFetching
 });
 
-let dispatchToProps = {addPost, updatePost, setUserProfile, setFetching, getUserProfileThunkCreator};
+let dispatchToProps = {
+    addPost,
+    setUserProfile,
+    setFetching,
+    getUserProfileThunkCreator,
+    getStatusThunkCreator,
+    setNewStatusThunkCreator};
 
-let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
+// let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
+//
+// export default connect(mapStateToProps, dispatchToProps)(withUrlDataContainerComponent);
 
-export default connect(mapStateToProps, dispatchToProps)(withUrlDataContainerComponent);
+export default compose(
+    connect(mapStateToProps, dispatchToProps),
+    withRouter
+    )(ProfileContainer);

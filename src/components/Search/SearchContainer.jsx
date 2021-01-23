@@ -11,15 +11,17 @@ import {
 import {connect} from "react-redux";
 import User from "./User";
 import Preloader from "../common/Preloader/Preloader";
+import {compose} from "redux";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 class UsersContainer extends React.PureComponent {
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
+        this.props.getUsersThunkCreator(this.props.searchPage.currentPage, this.props.searchPage.pageSize);
     }
 
     updatePage = (page) => {
         this.props.setCurrentPage(page);
-        this.props.getUsersThunkCreator(page, this.props.pageSize);
+        this.props.getUsersThunkCreator(page, this.props.searchPage.pageSize);
     };
 
     render() {
@@ -34,6 +36,8 @@ class UsersContainer extends React.PureComponent {
     }
 }
 
+let withAuthRedirectContainer = withAuthRedirect(UsersContainer);
+
 let mapStateToProps = (state) => {
     return {
         searchPage: state.searchPage,
@@ -45,4 +49,4 @@ const dispatchToProps = { follow, unfollow,
     followUserThunkCreator, unfollowUserThunkCreator
 };
 
-export default connect(mapStateToProps, dispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, dispatchToProps)(withAuthRedirectContainer);

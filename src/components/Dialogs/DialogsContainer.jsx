@@ -1,11 +1,8 @@
-import React from 'react';
-import {
-    addMessage,
-    updateMessage,
-} from "../../redux/dialogs-reducer";
+import {addMessage,} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {Redirect} from "react-router";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 // Оно сразу вызывает store.getState() и в результате у нас здесь просто стейт
 const mapStateToProps = (state) => {
@@ -29,17 +26,18 @@ const mapStateToProps = (state) => {
 //     }
 // }
 
-let redirectContainer = (props) => {
-    if (!props.isAuth) return <Redirect to={'/login'} />;
-
-    return <Dialogs {...props} />;
-};
-
+// это функция которую мы вызываем. она создаст редирект.
+// let redirectContainer = withAuthRedirect(Dialogs);
+//
 let DispatchToProps = {
-    addMessage,
-    updateMessage
+    addMessage
 };
+//
+// const DialogsContainer = connect(mapStateToProps, DispatchToProps)(redirectContainer);
+//
+// export default DialogsContainer;
 
-const DialogsContainer = connect(mapStateToProps, DispatchToProps)(redirectContainer);
-
-export default DialogsContainer;
+export default compose(
+    connect(mapStateToProps, DispatchToProps),
+    withAuthRedirect
+)(Dialogs);

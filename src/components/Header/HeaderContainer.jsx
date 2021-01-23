@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import {setUser, setUserThunkCreator} from "../../redux/auth-reducer";
+import {logoutThunkCreator, setUser, setUserThunkCreator} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 
 class HeaderContainer extends React.PureComponent {
@@ -22,6 +22,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-let dispatchToProps = {setUser, setUserThunkCreator};
+let dispatchToProps = {setUser, setUserThunkCreator, logoutThunkCreator};
 
 export default connect(mapStateToProps, dispatchToProps)(HeaderContainer);
