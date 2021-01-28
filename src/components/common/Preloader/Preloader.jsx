@@ -3,7 +3,8 @@ import s from "../../Search/Search.module.css";
 
 let Preloader = (props) => {
     return <div
-        className={props.isFetching ? `${s.fetching} ${s.fetching_true}` : `${s.fetching} ${s.fetching_false}`}>
+        className={`${s.fetching} ${s.fetching_true}`}>
+        {/*className={props.isFetching ? `${s.fetching} ${s.fetching_true}` : `${s.fetching} ${s.fetching_false}`}>*/}
         <div className={s.atom}>
             <div className={s.electron}></div>
             <div className={s.electron}></div>

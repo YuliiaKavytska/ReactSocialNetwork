@@ -1,22 +1,14 @@
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/redux-store';
 import ReactDOM from "react-dom";
-import {BrowserRouter} from "react-router-dom";
-import App from "./App";
-import './index.css';
-import {Provider} from "react-redux";
+import MainApp from "./App";
 
 // let createEntirePage = () => {
-    ReactDOM.render(
-        <BrowserRouter>
-            <Provider store={store}>
-                <App store={store}/>
-            </Provider>
-        </BrowserRouter>,
-        document.getElementById('root')
-    );
+ReactDOM.render(
+    <MainApp />,
+    document.getElementById('root')
+);
 // }
 
 //createEntirePage();

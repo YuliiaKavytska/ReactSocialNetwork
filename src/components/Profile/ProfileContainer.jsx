@@ -9,7 +9,7 @@ import {
     setUserProfile
 } from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
-import {withRouter} from 'react-router';
+import {Redirect, withRouter} from 'react-router';
 import {compose} from "redux";
 
 class ProfileContainer extends React.PureComponent {
@@ -18,11 +18,14 @@ class ProfileContainer extends React.PureComponent {
             this.props.setFetching();
         }
         // вот для чео нам нужен виз роутер. чтобы получить айди с ссылки и сделать запрос
-        let userId = this.props.match.params.user_id;
-        if (!userId) userId = 2;
+        this.userId = this.props.match.params.user_id;
+        if (!this.userId) {
+            this.userId = this.props.userId;
+            if (!this.userId) this.props.history.push('/login')
+        }
         // 13886
-        this.props.getUserProfileThunkCreator(userId);
-        this.props.getStatusThunkCreator(userId);
+        this.props.getUserProfileThunkCreator(this.userId);
+        this.props.getStatusThunkCreator(this.userId);
     }
 
     render() {
@@ -35,7 +38,9 @@ class ProfileContainer extends React.PureComponent {
 const mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
-    isFetching: state.searchPage.isFetching
+    isFetching: state.searchPage.isFetching,
+    userId: state.auth.id,
+    isAuth: state.auth.isAuth,
 });
 
 let dispatchToProps = {

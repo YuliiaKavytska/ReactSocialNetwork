@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/api";
+import {findUserChanger} from "../components/utils/object-helpers";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -9,7 +10,7 @@ const SET_LOADING = 'SET_LOADING';
 const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
 
 const initialState = {
-    users: [ ],
+    users: [],
     pageSize: 5,
     totalUserCount: 0,
     currentPage: 1,
@@ -17,20 +18,20 @@ const initialState = {
     isFollowing: [],
 };
 
-const searchReducer =(state = initialState, action) => {
+const searchReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.id ? ({...u, followed:  true}) : u),
+                users: findUserChanger(state, action.id, 'id', {followed: true})
             };
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u =>  u.id === action.id ? ({...u, followed: false}) : u),
+                users: findUserChanger(state, action.id, 'id', {followed: false})
             };
         case SET_USERS:
-        // ...state.users,
+            // ...state.users,
             return {
                 ...state,
                 users: [...action.users],
@@ -71,27 +72,25 @@ export const setTotalCount = (count) => ({type: SET_TOTAL_COUNT, count});
 export const setFetching = () => ({type: SET_LOADING});
 export const toggleFollowing = (id, status) => ({type: TOGGLE_FOLLOWING, id, status});
 
-export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
     dispatch(setFetching());
-    usersAPI.getUsers(currentPage, pageSize).then(data => {
-        dispatch(setUsers(data.items));
-        dispatch(setTotalCount(data.totalCount));
-        dispatch(setFetching());
-    });
+    let data = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCount(data.totalCount));
+    dispatch(setFetching());
 };
 
-export const followUserThunkCreator = (id) => (dispatch) => {
+const followUnfollowFlow = async (dispatch, apiMethod, actionCreator, id) => {
     dispatch(toggleFollowing(id, true));
-    usersAPI.followUser(id).then(data => {
-        if (data.resultCode === 0) dispatch(follow(id));
-        dispatch(toggleFollowing(id, false));
-    });
+    let data = await apiMethod(id);
+    if (data.resultCode === 0) dispatch(actionCreator(id));
+    dispatch(toggleFollowing(id, false));
 }
 
-export const unfollowUserThunkCreator = (id) => (dispatch) => {
-    dispatch(toggleFollowing(id, true));
-    usersAPI.unfollowUser(id).then(data => {
-        if (data.resultCode === 0) dispatch(unfollow(id));
-        dispatch(toggleFollowing(id, false));
-    })
+export const followUserThunkCreator = (id) => async (dispatch) => {
+    followUnfollowFlow(dispatch, usersAPI.followUser.bind(usersAPI), follow, id);
+}
+
+export const unfollowUserThunkCreator = (id) => async (dispatch) => {
+    followUnfollowFlow(dispatch, usersAPI.unfollowUser.bind(usersAPI), unfollow, id);
 }

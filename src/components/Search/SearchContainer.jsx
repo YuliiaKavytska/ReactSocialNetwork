@@ -1,36 +1,45 @@
 import React from 'react';
 import {
-    follow, followUserThunkCreator, getUsersThunkCreator,
+    follow,
+    followUserThunkCreator,
+    getUsersThunkCreator,
     setCurrentPage,
-    setFetching,
-    setTotalCount,
-    setUsers,
     toggleFollowing,
-    unfollow, unfollowUserThunkCreator
+    unfollow,
+    unfollowUserThunkCreator
 } from "../../redux/search-reducer";
 import {connect} from "react-redux";
-import User from "./User";
+import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {compose} from "redux";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {
+    getCurrentPage,
+    getIsFetching,
+    getIsFollowing,
+    getPageSize,
+    getTotalUserCount,
+    getUsers
+} from "../../redux/users-selectors";
 
 class UsersContainer extends React.PureComponent {
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.searchPage.currentPage, this.props.searchPage.pageSize);
+        let {currentPage, pageSize} = this.props;
+        this.props.getUsersThunkCreator(currentPage, pageSize);
     }
 
     updatePage = (page) => {
+        const {pageSize} = this.props
         this.props.setCurrentPage(page);
-        this.props.getUsersThunkCreator(page, this.props.searchPage.pageSize);
+        this.props.getUsersThunkCreator(page, pageSize);
     };
 
     render() {
-        let {isFetching} = this.props.searchPage;
+        let {isFetching} = this.props;
 
         return <div>
             {isFetching
                 ? <Preloader isFetching={isFetching}/>
-                : <User {...this.props} updatePage={this.updatePage}/>
+                : <Users {...this.props} updatePage={this.updatePage}/>
             }
         </div>;
     }
@@ -40,7 +49,12 @@ let withAuthRedirectContainer = withAuthRedirect(UsersContainer);
 
 let mapStateToProps = (state) => {
     return {
-        searchPage: state.searchPage,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUserCount: getTotalUserCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isFollowing: getIsFollowing(state)
     };
 };
 

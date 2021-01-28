@@ -2,8 +2,7 @@ import React from "react";
 import s from './Aside.module.css';
 import {NavLink} from "react-router-dom";
 
-const Aside = (props) => {
-    const favUsers = props.store.getState().aside.favUsers;
+const Aside = ({favUsers}) => {
     return (
         <aside className={s.aside}>
             <nav className={s.nav}>
@@ -39,13 +38,13 @@ const Aside = (props) => {
     );
 }
 
-const FavUser = (props) => {
+const FavUser = ({item}) => {
     return (
         <li className={s.fav_item}>
             <img
                 src="https://illustrators.ru/uploads/illustration/image/1137533/square_kotya.jpg"
                 alt=""/>
-            <a>{props.item.name}</a>
+            <a>{item.name}</a>
         </li>
     );
 }

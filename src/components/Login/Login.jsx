@@ -5,12 +5,12 @@ import {Input} from "../common/FormsControls/FormsControls";
 import {isRequired} from "../utils/validation";
 import {Redirect} from "react-router";
 
-const Login = props => {
+const Login = ({isAuth, userId, loginThunkCreator}) => {
     const login = (formData) => {
-        props.loginThunkCreator(formData.login, formData.password, formData.remember)
+        loginThunkCreator(formData.login, formData.password, formData.remember)
     }
 
-    if (props.isAuth) {
+    if (isAuth && userId) {
         return <Redirect to={'/profile'} />
     }
 
@@ -20,13 +20,16 @@ const Login = props => {
     </div>
 }
 
-const LoginForm = props => {
-    return <form action="" className={s.form} onSubmit={props.handleSubmit}>
+const LoginForm = ({handleSubmit, error}) => {
+    return <form action="" className={s.form} onSubmit={handleSubmit}>
+        {error && <div>
+            <p className={s.show_type_error}>{error}</p>
+        </div>}
         <div className={s.input_field}>
             <Field className={s.input} type="text" placeholder={'Email'} component={Input} name={'login'} validate={[isRequired]}/>
         </div>
         <div className={s.input_field}>
-            <Field className={s.input} type="password" placeholder={'Password'} component={Input} name={'password'} validate={isRequired}/>
+            <Field className={s.input} type="password" placeholder={'Password'} component={Input} name={'password'} validate={[isRequired]}/>
         </div>
         <div className={s.input_submit}>
             <div>

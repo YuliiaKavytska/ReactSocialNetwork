@@ -4,10 +4,6 @@ import {logoutThunkCreator, setUser, setUserThunkCreator} from "../../redux/auth
 import {connect} from "react-redux";
 
 class HeaderContainer extends React.PureComponent {
-    componentDidMount() {
-        this.props.setUserThunkCreator();
-    }
-
     render() {
         return (
             <Header {...this.props} />
@@ -22,6 +18,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-let dispatchToProps = {setUser, setUserThunkCreator, logoutThunkCreator};
-
-export default connect(mapStateToProps, dispatchToProps)(HeaderContainer);
+export default connect(mapStateToProps, {logoutThunkCreator})(HeaderContainer);
