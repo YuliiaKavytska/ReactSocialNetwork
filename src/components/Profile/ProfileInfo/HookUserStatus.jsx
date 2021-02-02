@@ -31,7 +31,7 @@ const HookUserStatus = props => {
                 onInput={editStatus}
             />
             : <p onDoubleClick={editModeOn}
-            >Status: {props.status || '---'}</p>
+            ><b>Status:</b> {props.status || '---'}</p>
         }
     </>
 }

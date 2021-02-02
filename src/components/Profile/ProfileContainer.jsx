@@ -4,16 +4,17 @@ import {connect} from "react-redux";
 import {
     addPost,
     getStatusThunkCreator,
-    getUserProfileThunkCreator,
-    setNewStatusThunkCreator,
+    getUserProfileThunkCreator, savePhoto,
+    setNewStatusThunkCreator, setProfileTC,
     setUserProfile
 } from "../../redux/profile-reducer";
 import {setFetching} from "../../redux/search-reducer";
-import {Redirect, withRouter} from 'react-router';
+import {withRouter} from 'react-router';
 import {compose} from "redux";
 
 class ProfileContainer extends React.PureComponent {
-    componentDidMount() {
+
+    refreshProfile = () => {
         if (!this.props.isFetching) {
             this.props.setFetching();
         }
@@ -28,12 +29,20 @@ class ProfileContainer extends React.PureComponent {
         this.props.getStatusThunkCreator(this.userId);
     }
 
+    componentDidMount() {
+        this.refreshProfile();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.user_id !== this.props.match.params.user_id) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
-        return <Profile {...this.props} />;
+        return <Profile {...this.props} isOwner={!this.props.match.params.user_id} />;
     }
 }
-
-// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 const mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
@@ -49,11 +58,10 @@ let dispatchToProps = {
     setFetching,
     getUserProfileThunkCreator,
     getStatusThunkCreator,
-    setNewStatusThunkCreator};
-
-// let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
-//
-// export default connect(mapStateToProps, dispatchToProps)(withUrlDataContainerComponent);
+    setNewStatusThunkCreator,
+    savePhoto,
+    setProfileTC
+};
 
 export default compose(
     connect(mapStateToProps, dispatchToProps),

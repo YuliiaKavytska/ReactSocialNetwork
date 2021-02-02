@@ -7,7 +7,7 @@ const User = ({user, isFollowing, ...props}) => {
     return <div className={s.user_item}>
         <div className={s.image_cont}>
             <NavLink to={'/profile/' + user.id}>
-                <img src={userPhoto || user.photos.small} className={s.user_image}/>
+                <img src={user.photos.large || userPhoto} className={s.user_image}/>
             </NavLink>
         </div>
         <div className={s.main_info}>

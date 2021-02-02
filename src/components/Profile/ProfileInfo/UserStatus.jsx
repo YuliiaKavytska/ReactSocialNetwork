@@ -16,7 +16,7 @@ export default class UserStatus extends React.PureComponent {
         this.setState({editMode: true});
     }
 
-    editModeOff = (e) => {
+    editModeOff = () => {
         this.setState({editMode: false});
         this.props.updateStatus(this.state.status);
     }

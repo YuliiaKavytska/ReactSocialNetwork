@@ -5,15 +5,18 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import SearchContainer from "./components/Search/SearchContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
+import LazyLoading from "./components/hoc/withLazyLoading";
+import {Redirect} from "react-router";
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 class App extends React.Component {
     componentDidMount() {
@@ -27,8 +30,13 @@ class App extends React.Component {
                 <AsideContainer/>
                 <main className='main'>
                     {!this.props.initialized ? <Preloader/> : <>
-                        <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                        <Route path='/profile/:user_id?' render={() => <ProfileContainer/>}/>
+                        <Route path={'/'} exact >
+                            {this.props.initialized
+                                ? <Redirect to={'/profile'} />
+                                : <Redirect to={'/login'} />}
+                        </Route>
+                        <Route path='/dialogs' render={LazyLoading(DialogsContainer)}/>
+                        <Route path='/profile/:user_id?' render={LazyLoading(ProfileContainer)}/>
                         <Route path='/news' render={() => <News/>}/>
                         <Route path='/music' render={() => <Music/>}/>
                         <Route path='/settings' render={() => <Settings/>}/>

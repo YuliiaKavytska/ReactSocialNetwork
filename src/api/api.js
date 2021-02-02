@@ -28,7 +28,19 @@ export const profileAPI = {
         return instance.get('/profile/status/' + userId);
     },
     updateStatus(status) {
-        return instance.put('/profile/status', {status: status});
+        return instance.put('/profile/status', {status}).then(response => response.data);
+    },
+    setNewPhoto(image) {
+        const formData = new FormData();
+        formData.append('image', image);
+        return instance.put('/profile/photo', formData, {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        }).then(response => response.data);
+    },
+    updateProfile(profileData) {
+        return instance.put('/profile', profileData).then(response => response.data);
     }
 };
 

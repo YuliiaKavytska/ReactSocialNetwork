@@ -6,7 +6,7 @@ import User from "./User";
 const Users = ({totalUserCount, pageSize, currentPage, users, isFollowing, ...props}) => {
     return <div className={s.wrapper}>
             <Paginator updatePage ={props.updatePage}
-                       totalUserCount={totalUserCount}
+                       totalItemCount={totalUserCount}
                        pageSize={pageSize}
                        currentPage={currentPage}/>
             <div className={s.users}>

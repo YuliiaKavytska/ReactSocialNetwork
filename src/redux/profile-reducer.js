@@ -1,11 +1,13 @@
 import {profileAPI} from "../api/api";
 import {setFetching} from "./search-reducer";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const UPDATE_STATUS = 'UPDATE_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const UPDATE_PHOTO = 'UPDATE_PHOTO';
 
 let initialState = {
     profile: {},
@@ -55,11 +57,19 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.status,
-            }
+            };
         case DELETE_POST:
             return {
                 ...state,
                 posts: state.posts.filter(item => item.id !== action.id)
+            };
+        case UPDATE_PHOTO:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
             }
         default:
             return state;
@@ -71,11 +81,12 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const setNewStatus = (status) => ({type: UPDATE_STATUS, status});
 export const deletePost = (id) => ({type: DELETE_POST, id});
+export const updatePhoto = (photos) => ({type: UPDATE_PHOTO, photos})
 
 export default profileReducer;
 
 export const getUserProfileThunkCreator = (userId) => async (dispatch) => {
-    let data = await profileAPI.getUserProfile(userId);
+    const data = await profileAPI.getUserProfile(userId);
     dispatch(setUserProfile(data));
     dispatch(setFetching());
 }
@@ -85,7 +96,23 @@ export const getStatusThunkCreator = (userId) => async (dispatch) => {
     dispatch(setStatus(response.data));
 };
 
-export const setNewStatusThunkCreator = (status) => (dispatch) => {
-    let response = profileAPI.updateStatus(status);
-    if (response.data.resultCode === 0) dispatch(setNewStatus(status));
+export const setNewStatusThunkCreator = (status) => async (dispatch) => {
+    const data = await profileAPI.updateStatus(status);
+    if (data.resultCode === 0) dispatch(setNewStatus(status));
+}
+
+export const savePhoto = (photo) => async (dispatch) => {
+    const data = await profileAPI.setNewPhoto(photo);
+    if (data.resultCode === 0) dispatch(updatePhoto(data.data.photos));
+}
+
+export const setProfileTC = (profileData) => async (dispatch, getState) => {
+    const userId = getState().auth.id;
+    const data = await profileAPI.updateProfile(profileData);
+    if (data.resultCode === 0) {
+        dispatch(getUserProfileThunkCreator(userId));
+    } else {
+        let message = data.messages.length > 0 ? data.messages[0] : 'Something wrong...';
+        dispatch(stopSubmit('profileInfo', {contacts: { '': message}}))
+    }
 }

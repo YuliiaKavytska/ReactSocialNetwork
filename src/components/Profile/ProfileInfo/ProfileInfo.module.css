@@ -2,34 +2,91 @@
     background: url('https://i.pinimg.com/originals/04/ef/5e/04ef5e1743f2123165f573616c533885.jpg') center / cover no-repeat;
     position: relative;
     overflow: hidden;
-    min-height: 300px;
 }
 
 .mainInfoBlock {
     display: flex;
-    position: absolute;
-    padding: 5px 15px;
+    align-items: center;
     width: 100%;
-    height: 150px;
-    min-height: 150px;
-    bottom: 0;
+    height: 100%;
+    padding: 5px 15px;
     background: rgba(255, 255, 255, 0.6);
 }
 
 .mainInformation img {
-    height: 100%;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
 }
 
 .information {
-    align-self: center;
-    font-weight: 700;
+    display: inline-block;
     letter-spacing: 0.3px;
     font-size: 16px;
-    margin: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 25px;
 }
 
 .information p {
-    margin: 5px 0;
+    padding: 3px 0;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 5px;
+    color: #fff;
+    border-radius: 10px;
+    background: #649bff;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    padding: 5px 10px;
+    transition: all 0.5s ease;
+}
+
+.button:hover {
+    background: #477AD2;
+}
+
+.editing_btn {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+input {
+    padding: 3px 10px !important;
+}
+
+.field {
+    padding: 3px 0;
+}
+
+.send_form {
+    padding: 10px 20px;
+}
+
+.button:active {
+    background: navy;
+}
+
+.constacts {
+    display: flex;
+    height: 50%;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.constacts p {
+    width: 50%;
+}
+
+.show_type_error {
+    padding: 7px 10px !important;
+    color: red;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid red;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
 }

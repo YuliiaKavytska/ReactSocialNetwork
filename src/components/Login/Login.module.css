@@ -19,22 +19,17 @@
 
 .input {
     width: 100%;
-    padding: 10px 7px;
-    border: 1px solid dodgerblue;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    outline: none;
 }
 
-.input:focus {
-    box-shadow: 0px 0px 10px 0px dodgerblue;
-}
+/*.input:focus {*/
+/*    box-shadow: 0px 0px 10px 0px dodgerblue;*/
+/*}*/
 
-.input::placeholder {
-    color: #649bff;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
+/*.input::placeholder {*/
+/*    color: #649bff;*/
+/*    font-weight: bold;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
 
 .input_submit {
     display: flex;
