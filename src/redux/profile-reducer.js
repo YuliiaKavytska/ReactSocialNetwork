@@ -112,7 +112,16 @@ export const setProfileTC = (profileData) => async (dispatch, getState) => {
     if (data.resultCode === 0) {
         dispatch(getUserProfileThunkCreator(userId));
     } else {
-        let message = data.messages.length > 0 ? data.messages[0] : 'Something wrong...';
-        dispatch(stopSubmit('profileInfo', {contacts: { '': message}}))
+        const mediaObject = {};
+        for ( let item of data.messages) {
+            let media = item.split('');
+            media.pop();
+            media = media.join('').split('->');
+            media.shift();
+            media = media.toString().toLowerCase();
+            mediaObject[media] = item;
+        }
+        dispatch(stopSubmit('profileInfo', {'contacts': mediaObject}))
+        return Promise.reject('qqq');
     }
 }

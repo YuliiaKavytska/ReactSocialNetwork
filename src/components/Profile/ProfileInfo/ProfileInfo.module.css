@@ -21,6 +21,7 @@
 
 .information {
     display: inline-block;
+    width: 100%;
     letter-spacing: 0.3px;
     font-size: 16px;
     margin: 0px 0px 0px 25px;
@@ -53,12 +54,10 @@
     padding: 10px 20px;
 }
 
-input {
-    padding: 3px 10px !important;
-}
-
 .field {
     padding: 3px 0;
+    display: flex;
+    align-items: center;
 }
 
 .send_form {
@@ -89,4 +88,11 @@ input {
     border-radius: 10px;
     font-weight: bold;
     letter-spacing: 2px;
+}
+.looking_job {
+    align-items: self-start;
+}
+
+b {
+    margin-right: 10px;
 }

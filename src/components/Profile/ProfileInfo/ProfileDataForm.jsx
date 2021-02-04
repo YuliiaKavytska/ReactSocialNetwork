@@ -15,18 +15,20 @@ const ProfileDataForm = ({initialValues, status, isOwner, onMainPhotoSelected, h
             <b>About me: </b>
             <Field  placeholder={'About me'} name='aboutMe' component={Input}/>
         </div>
-        <div className={s.field}>
-            <b>Looking for a job: </b>
-            <Field name='lookingForAJob'
-                   component={Input}
-                   type='radio'
-                   value={true}/>
-            Yes
-            <Field name='lookingForAJob'
-                component={Input}
-                   type='radio'
-                   value={false}/>
-            No
+        <div className={s.field + ' ' + s.looking_job}>
+            <div>
+                <b>Looking for a job: </b>
+                <Field name='lookingForAJob'
+                       component={Input}
+                       type='radio'
+                       value={true}/>
+                Yes
+                <Field name='lookingForAJob'
+                       component={Input}
+                       type='radio'
+                       value={false}/>
+                No
+            </div>
         </div>
         <div className={s.field}>
             <b>My professional skills: </b>
@@ -58,7 +60,6 @@ const Contact = ({socialMedia, socialValue}) => {
     return <div className={s.field}>
         <b>{socialMedia}: </b>
         <Field component={Input} placeholder={socialMedia} name={'contacts.' + socialMedia} />
-        {socialValue}
     </div>
 }
 
