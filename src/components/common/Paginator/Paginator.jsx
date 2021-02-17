@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import s from './Paginator.module.css';
+import cn from 'classnames';
 
-const Paginator = ({totalItemCount, pageSize, currentPage, porionSize = 6, ...props}) => {
+const Paginator = ({totalItemCount, pageSize, currentPage, porionSize = 5, ...props}) => {
 
     const pagesCount = Math.ceil(totalItemCount / pageSize);
     let pagination = [];
@@ -21,7 +22,7 @@ const Paginator = ({totalItemCount, pageSize, currentPage, porionSize = 6, ...pr
     return <div className={s.pagination}>
         {portionNumber > 1
         && <span onClick={() => { setPortionNumber( 1) }}
-                 className={`${s.page} ${s.selectedPage}`}
+                 className={cn(s.page, s.selectedPage)}
         >Start</span>}
         {portionNumber > 1
         && <span onClick={() => { setPortionNumber(i => i - 1) }}

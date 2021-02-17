@@ -1,0 +1,19 @@
+.error_number {
+    font-weight: bold;
+    color: dodgerblue;
+    font-size: 160px;
+}
+
+.error_subtitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.error_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

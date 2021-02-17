@@ -97,8 +97,12 @@ export const getStatusThunkCreator = (userId) => async (dispatch) => {
 };
 
 export const setNewStatusThunkCreator = (status) => async (dispatch) => {
-    const data = await profileAPI.updateStatus(status);
-    if (data.resultCode === 0) dispatch(setNewStatus(status));
+    try {
+        const data = await profileAPI.updateStatus(status);
+        if (data.resultCode === 0) dispatch(setNewStatus(status));
+    } catch (error) {
+        // обработка ошибки. персонализированый алерт. диспачим наличине ошибки в стор.
+    }
 }
 
 export const savePhoto = (photo) => async (dispatch) => {
@@ -122,6 +126,6 @@ export const setProfileTC = (profileData) => async (dispatch, getState) => {
             mediaObject[media] = item;
         }
         dispatch(stopSubmit('profileInfo', {'contacts': mediaObject}))
-        return Promise.reject('qqq');
+        return Promise.reject(data.messages[0]);
     }
 }

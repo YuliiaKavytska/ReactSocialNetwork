@@ -13,14 +13,23 @@ import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
 import LazyLoading from "./components/hoc/withLazyLoading";
-import {Redirect} from "react-router";
+import {Redirect, Switch} from "react-router";
+import NotFound from "./components/Errors/NotFound";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 class App extends React.Component {
+    catchAllUnhandledErrors = (reason, promise) => {
+        alert("promiseRejectionEvent")
+    }
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -29,20 +38,19 @@ class App extends React.Component {
                 <HeaderContainer/>
                 <AsideContainer/>
                 <main className='main'>
-                    {!this.props.initialized ? <Preloader/> : <>
+                    {!this.props.initialized ? <Preloader/> : <Switch>
                         <Route path={'/'} exact >
-                            {this.props.initialized
-                                ? <Redirect to={'/profile'} />
-                                : <Redirect to={'/login'} />}
+                            {<Redirect to={'/profile'} />}
                         </Route>
-                        <Route path='/dialogs' render={LazyLoading(DialogsContainer)}/>
+                        <Route path='/dialogs' exact render={LazyLoading(DialogsContainer)}/>
                         <Route path='/profile/:user_id?' render={LazyLoading(ProfileContainer)}/>
-                        <Route path='/news' render={() => <News/>}/>
-                        <Route path='/music' render={() => <Music/>}/>
-                        <Route path='/settings' render={() => <Settings/>}/>
-                        <Route path='/search' render={() => <SearchContainer/>}/>
-                        <Route path='/login' render={() => <LoginContainer/>}/>
-                    </>
+                        <Route path='/news' exact render={() => <News/>}/>
+                        <Route path='/music' exact render={() => <Music/>}/>
+                        <Route path='/settings' exact render={() => <Settings/>}/>
+                        <Route path='/search' exact render={() => <SearchContainer/>}/>
+                        <Route path='/login' exact render={() => <LoginContainer/>}/>
+                        <Route path='/*' render={() => <NotFound/>}/>
+                    </Switch>
                     }
                 </main>
             </div>
@@ -58,7 +66,7 @@ const mapStateToProps = (state) => {
 
 let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 
-let MainApp = (props) => {
+let MainApp = () => {
     return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>

@@ -14,6 +14,7 @@
 }
 
 .input_field {
+    display: flex;
     padding: 15px 0;
 }
 
@@ -61,3 +62,24 @@
     font-weight: bold;
     letter-spacing: 2px;
 }
+
+.captcha {
+    display: flex;
+    flex-direction: column;
+}
+
+.captcha > div {
+    flex-grow: 1;
+}
+
+.captcha_img {
+    align-self: center;
+}
+
+.captcha_title {
+    padding-bottom: 8px;
+    color: dodgerblue;
+    font-weight: bold;
+    font-size: 18px;
+}
+

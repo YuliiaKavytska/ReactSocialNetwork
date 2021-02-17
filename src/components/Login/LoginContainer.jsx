@@ -7,6 +7,7 @@ const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
         userId: state.auth.id,
+        captchaUrl: state.auth.captchaUrl,
     }
 };
 

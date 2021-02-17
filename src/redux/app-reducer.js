@@ -22,7 +22,10 @@ const appReducer = (state = initialState, action) => {
 export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS});
 
 export const initializeApp = () => (dispatch) => {
+    // авторизируем пользователя. санка возвращает нам промис. мы его дожидаемся и ставим что мы авторизировали пользователя
+    // посылаем запрос на аус ми
     let setUserPromise = dispatch(setUserThunkCreator());
+    // наше приложение авторизировано, если у нас выполнились все пропимы
     Promise.all([setUserPromise])
         .then(() => {
         dispatch(initializedSuccess())

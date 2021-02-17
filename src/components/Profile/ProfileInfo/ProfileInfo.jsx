@@ -12,9 +12,10 @@ const ProfileInfo = ({profile, status, isOwner, setNewStatusThunkCreator, savePh
     }
 
     const onSubmit = (formData) => {
-        setProfileTC(formData).then(() => {
+        let promise = setProfileTC(formData);
+        promise.then(() => {
             setEditMode(i => !i)
-        })
+        });
     }
 
     return <div className={s.mainInformation}>

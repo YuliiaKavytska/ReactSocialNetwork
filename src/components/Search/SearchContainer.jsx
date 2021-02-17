@@ -20,6 +20,7 @@ import {
     getTotalUserCount,
     getUsers
 } from "../../redux/users-selectors";
+import {compose} from "redux";
 
 class UsersContainer extends React.PureComponent {
     componentDidMount() {
@@ -45,8 +46,6 @@ class UsersContainer extends React.PureComponent {
     }
 }
 
-let withAuthRedirectContainer = withAuthRedirect(UsersContainer);
-
 let mapStateToProps = (state) => {
     return {
         users: getUsers(state),
@@ -63,4 +62,7 @@ const dispatchToProps = { follow, unfollow,
     followUserThunkCreator, unfollowUserThunkCreator
 };
 
-export default connect(mapStateToProps, dispatchToProps)(withAuthRedirectContainer);
+export default compose(
+    connect(mapStateToProps, dispatchToProps),
+    withAuthRedirect
+    )(UsersContainer);
