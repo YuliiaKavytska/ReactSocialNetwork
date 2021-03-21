@@ -2,12 +2,19 @@
   "name": "react-it-kam",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yuliiakavytska.github.io/ReactSotialNetwork",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
+    "@types/classnames": "^2.2.11",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-test-renderer": "^17.0.1",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "react": "^17.0.1",
@@ -21,6 +28,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "save-dev": "0.0.1-security",
+    "typescript": "^4.2.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -50,6 +58,11 @@
     ]
   },
   "devDependencies": {
+    "@types/redux-form": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "eslint-plugin-react": "^7.22.0",
     "gh-pages": "^3.1.0",
     "react-test-renderer": "^17.0.1"
   }

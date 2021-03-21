@@ -13,15 +13,6 @@
     margin-top: 10px;
 }
 
-.input_field {
-    display: flex;
-    padding: 15px 0;
-}
-
-.input {
-    width: 100%;
-}
-
 /*.input:focus {*/
 /*    box-shadow: 0px 0px 10px 0px dodgerblue;*/
 /*}*/
