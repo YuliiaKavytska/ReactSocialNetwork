@@ -1,6 +1,6 @@
 import React, {ComponentType} from 'react'
 import {
-    actions,
+    actions, FilterType,
     followUserThunkCreator,
     getUsersThunkCreator,
     unfollowUserThunkCreator
@@ -10,7 +10,7 @@ import Users from "./Users"
 import Preloader from "../common/Preloader/Preloader"
 import {withAuthRedirect} from "../hoc/withAuthRedirect"
 import {
-    getCurrentPage,
+    getCurrentPage, getFilter,
     getIsFetching,
     getIsFollowing,
     getPageSize,
@@ -23,14 +23,19 @@ import {UserType} from "../../types/types";
 
 class UsersContainer extends React.PureComponent<PropsType> {
     componentDidMount() {
-        let {currentPage, pageSize} = this.props
-        this.props.getUsersThunkCreator(currentPage, pageSize)
+        let {currentPage, pageSize, filter} = this.props
+        this.props.getUsersThunkCreator(currentPage, pageSize, filter.term, filter.friend)
     }
 
     updatePage = (page: number): void => {
-        const {pageSize} = this.props
+        const {pageSize, filter} = this.props
         this.props.setCurrentPage(page)
-        this.props.getUsersThunkCreator(page, pageSize)
+        this.props.getUsersThunkCreator(page, pageSize, filter.term, filter.friend)
+    }
+
+    onFilterChanged = (filter: FilterType) => {
+        const {pageSize} = this.props
+        this.props.getUsersThunkCreator(1, pageSize, filter.term, filter.friend)
     }
 
     render() {
@@ -38,8 +43,8 @@ class UsersContainer extends React.PureComponent<PropsType> {
 
         return <div>
             {isFetching
-                ? <Preloader />
-                : <Users {...this.props} updatePage={this.updatePage}/>
+                ? <Preloader/>
+                : <Users {...this.props} updatePage={this.updatePage} onFilterChanged={this.onFilterChanged} />
             }
         </div>
     }
@@ -51,7 +56,8 @@ const mapStateToProps = (state: StateType): MapStateToProps => ({
     totalUserCount: getTotalUserCount(state),
     currentPage: getCurrentPage(state),
     isFetching: getIsFetching(state),
-    isFollowing: getIsFollowing(state)
+    isFollowing: getIsFollowing(state),
+    filter: getFilter(state)
 })
 
 
@@ -73,12 +79,12 @@ type MapStateToProps = {
     isFetching: boolean
     users: Array<UserType>
     isFollowing: Array<number>
+    filter: FilterType
 }
 type DispatchProps = {
-    follow: (id: number) => void
     unfollowUserThunkCreator: (id: number) => void
     followUserThunkCreator: (id: number) => void
-    getUsersThunkCreator: (currentPage: number , pageSize: number) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number, term: string, friend: boolean | null) => void
     setCurrentPage: (page: number) => void
 }
 type OwnPropsType = {

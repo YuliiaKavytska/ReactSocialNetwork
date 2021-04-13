@@ -96,7 +96,7 @@ interface IDispatch {
     getStatusThunkCreator: (userId: number) => void
     setNewStatusThunkCreator: (status: string) => void
     savePhoto: (photo: File) => void
-    setProfileTC: (profileData: ReqDataType) => any
+    setProfileTC: (profileData: ProfileType) => any
 }
 
 let dispatchToProps = {

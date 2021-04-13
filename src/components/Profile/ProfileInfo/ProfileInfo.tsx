@@ -11,7 +11,7 @@ interface IProps {
     isOwner: boolean
     setNewStatusThunkCreator: (status: string) => void
     savePhoto: (photo: File) => void
-    setProfileTC: (profileData: ReqDataType) => Promise<any>
+    setProfileTC: (profileData: ProfileType) => Promise<any>
 }
 
 // type IProps = ProfileContainerPropsType & { isOwner: boolean }
@@ -33,7 +33,7 @@ const ProfileInfo: React.FC<IProps> = ({
             savePhoto(e.target.files[0])
     }
 
-    const onSubmit = (formData: ReqDataType) => {
+    const onSubmit = (formData: ProfileType) => {
         // todo: remove then !!!!
         let promise: any = setProfileTC(formData)
         promise.then(() => {
@@ -52,8 +52,8 @@ const ProfileInfo: React.FC<IProps> = ({
                 </button>}
             </div>
             {editMode
-                ? <ProfileDataFormContainer values={profile as ProfileType}
-                                            status={status}
+                ? <ProfileDataFormContainer initialValues={profile as any}
+                                            profile={profile as ProfileType}
                                             isOwner={isOwner}
                                             onSubmit={onSubmit}
                                             onMainPhotoSelected={onMainPhotoSelected}

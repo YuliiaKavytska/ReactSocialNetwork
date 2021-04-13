@@ -21,7 +21,7 @@ export const profileAPI = {
             headers: {'Content-type': 'multipart/form-data'}
         }).then(res => res.data)
     },
-    updateProfile(profileData: ReqDataType) {
+    updateProfile(profileData: ProfileType) {
         return instance.put<RespT>('/profile', profileData).then(res => res.data)
     }
 }

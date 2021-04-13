@@ -6,8 +6,8 @@ export type UserType = {
     followed: boolean
 }
 export type PhotosType = {
-    small: string
-    large: string
+    small: string | null
+    large: string | null
 }
 export type ReqDataType = Omit<ProfileMainInfoType, 'userId'> & ContactsType
 export type ProfileType = ProfileMainInfoType & {

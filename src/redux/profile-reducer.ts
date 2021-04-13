@@ -109,7 +109,7 @@ export const savePhoto = (photo: File): ThunkType => async (dispatch) => {
     if (data.resultCode === ResponseResultCodes.Success) dispatch(actions.updatePhoto(data.data.photos))
 }
 
-export const setProfileTC = (profileData: ReqDataType): BaseThunkType<ActionTypes | FormAction, Promise<any>> =>
+export const setProfileTC = (profileData: ProfileType): BaseThunkType<ActionTypes | FormAction, Promise<any>> =>
     async (dispatch, getState) => {
     const userId = getState().auth.id
     const data = await profileAPI.updateProfile(profileData)
@@ -119,7 +119,6 @@ export const setProfileTC = (profileData: ReqDataType): BaseThunkType<ActionType
         } else {
             throw new Error('User ID can`t be nullable')
         }
-
     } else {
         type MediaObjectType = {
             [name: string]: string

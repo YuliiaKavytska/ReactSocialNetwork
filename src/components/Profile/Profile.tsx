@@ -11,7 +11,7 @@ export type ProfilePropsType = {
     status: string | null
     setNewStatusThunkCreator: (status: string) => void
     savePhoto: (photo: File) => void
-    setProfileTC: (profileData: ReqDataType) => Promise<any>
+    setProfileTC: (profileData: ProfileType) => Promise<any>
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {

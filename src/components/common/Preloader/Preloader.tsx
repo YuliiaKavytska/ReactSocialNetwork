@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "../../Search/Search.module.css";
+import s from "./Preloader.module.css";
 
 let Preloader: React.FC = () => {
     return <div

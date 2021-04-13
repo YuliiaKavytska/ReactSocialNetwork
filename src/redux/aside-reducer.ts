@@ -2,11 +2,7 @@ import {FavUserType, UserType} from "../types/types";
 import {InferActionsTypes} from "./redux-store";
 
 let initialState = {
-    favUsers: [
-        // {id: 1, name: 'Yuliia'},
-        // {id: 2, name: 'Nastya'},
-        // {id: 3, name: 'Sasha'}
-    ] as Array<UserType>
+    favUsers: [] as Array<UserType>
 }
 
 export type InitialStateType = typeof initialState;

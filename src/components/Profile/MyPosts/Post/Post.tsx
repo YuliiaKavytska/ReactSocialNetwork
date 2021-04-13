@@ -5,7 +5,7 @@ import {PostType} from "../../../../types/types";
 
 interface IProps {
     posts: Array<PostType>
-    photo: string
+    photo: string | null
 }
 
 const Post: React.FC<IProps> = ({posts, photo}) => {
