@@ -5,7 +5,7 @@ import {FilterType} from "../../redux/search-reducer";
 import classnames from 'classnames';
 
 interface IProps {
-    filter: FilterType
+    filter: {term: string, friend: 'null' | 'true' | 'false'}
     onFilterChanged: (filter: FilterType) => void
 }
 
@@ -34,9 +34,10 @@ const UsersSearchForm: React.FC<IProps> = ({onFilterChanged, filter}) => {
     return <div>
         <h3 className={s.search_label}>Find user:</h3>
         <Formik
-            initialValues={{term: filter.term, friend: 'null'}}
+            initialValues={{term: filter.term, friend: filter.friend}}
             validate={usersSearchFormValidate}
             onSubmit={onSubmit}
+            enableReinitialize={true}
         >
             {({isSubmitting}) => (
                 <Form className={s.form_control}>

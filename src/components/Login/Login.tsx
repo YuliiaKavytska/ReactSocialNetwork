@@ -4,7 +4,9 @@ import {InjectedFormProps, reduxForm} from "redux-form"
 import {CreateField, Input} from "../common/FormsControls/FormsControls"
 import {isRequired} from "../utils/validation"
 import {Redirect} from "react-router"
-import {LoginPropsType} from './LoginContainer'
+import {useDispatch, useSelector} from "react-redux";
+import {loginThunkCreator} from "../../redux/auth-reducer";
+import {StateType} from "../../redux/redux-store";
 
 interface IPayloadData {
     login: string
@@ -16,9 +18,15 @@ interface IPayloadData {
 // исключаем другие типы данных из неймов для полей. они могут быть только стринг
 export type FieldNameTypes = Extract<keyof IPayloadData, string>
 
-const Login: React.FC<LoginPropsType> = ({isAuth, userId, loginThunkCreator, captchaUrl}) => {
+const Login: React.FC = () => {
+
+    const dispatch = useDispatch()
+    const isAuth = useSelector((state: StateType) => state.auth.isAuth)
+    const userId = useSelector((state: StateType) => state.auth.id)
+    const captchaUrl = useSelector((state: StateType) => state.auth.captchaUrl)
+
     const login = (formData: IPayloadData) => {
-        loginThunkCreator(formData.login, formData.password, formData.remember, formData.captcha)
+        dispatch(loginThunkCreator(formData.login, formData.password, formData.remember, formData.captcha))
     }
 
     if (isAuth && userId) {
@@ -41,25 +49,14 @@ const LoginForm: React.FC<InjectedFormProps<IPayloadData, IForm> & IForm> = ({ha
             <p className={s.show_type_error}>{error}</p>
         </div>}
         {CreateField<FieldNameTypes>("text", 'Email', Input, 'login', [isRequired])}
-        {/*<div className={s.input_field}>*/}
-        {/*    <Field className={s.input} type="text" placeholder={'Email'} component={Input} name={'login'}*/}
-        {/*           validate={[isRequired]}/>*/}
-        {/*</div>*/}
         {CreateField<FieldNameTypes>("password", 'Password', Input, 'password', [isRequired])}
-        {/*<div className={s.input_field}>*/}
-        {/*    <Field className={s.input} type="password" placeholder={'Password'} component={Input} name={'password'}*/}
-        {/*           validate={[isRequired]}/>*/}
-        {/*</div>*/}
         {captchaUrl && <div className={s.captcha}>
             <p className={s.captcha_title}>Are you a human? Write down anti-bot symbols.</p>
             <div className={s.captcha_img}>
                 <img src={captchaUrl} alt="captcha"/>
             </div>
             {CreateField<FieldNameTypes>("text", 'Validate symbols', Input, 'captcha', [isRequired])}
-            {/*<div className={s.input_field}>*/}
-            {/*    <Field className={s.input} type='text' component={Input} name='captcha' placeholder='Validate symbols'*/}
-            {/*           validate={[isRequired]}/>*/}
-            {/*</div>*/}
+
         </div>}
         <div className={s.input_submit}>
             {CreateField<FieldNameTypes>("checkbox",
@@ -68,10 +65,6 @@ const LoginForm: React.FC<InjectedFormProps<IPayloadData, IForm> & IForm> = ({ha
                 'remember',
                 undefined,
                 'Remember me')}
-            {/*<div>*/}
-            {/*    <Field className={s.input_check} type="checkbox" component={'input'} name={'remember'}/>*/}
-            {/*    Remember me*/}
-            {/*</div>*/}
             <button className={s.login_button}>Submit</button>
         </div>
     </form>

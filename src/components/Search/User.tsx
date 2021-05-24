@@ -3,19 +3,22 @@ import s from "./Search.module.css";
 import {NavLink} from "react-router-dom";
 import userPhoto from "../../assets/images/photo.png";
 import {UserType} from "../../types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {getIsFollowing} from "../../redux/users-selectors";
+import {followUserThunkCreator, unfollowUserThunkCreator} from "../../redux/search-reducer";
 
 interface IProps {
     user: UserType
-    isFollowing: Array<number>
-    unfollowUserThunkCreator: (id: number) => void
-    followUserThunkCreator: (id: number) => void
 }
 
-const User: React.FC<IProps> = ({user, isFollowing, ...props}) => {
+const User: React.FC<IProps> = ({user}) => {
+    const isFollowing = useSelector(getIsFollowing)
+    const dispatch = useDispatch()
+
     return <div className={s.user_item}>
         <div className={s.image_cont}>
             <NavLink to={'/profile/' + user.id}>
-                <img src={user.photos.large || userPhoto} className={s.user_image}/>
+                <img src={user.photos.large || userPhoto} className={s.user_image} />
             </NavLink>
         </div>
         <div className={s.main_info}>
@@ -24,12 +27,12 @@ const User: React.FC<IProps> = ({user, isFollowing, ...props}) => {
             {user.followed
                 ? <button
                     className={s.follow}
-                    onClick={() => props.unfollowUserThunkCreator(user.id)}
+                    onClick={() => dispatch(unfollowUserThunkCreator(user.id))}
                     disabled={isFollowing.some(e => e === user.id)}
                 >Unfollow</button>
                 : <button
                     className={s.follow}
-                    onClick={() => props.followUserThunkCreator(user.id)}
+                    onClick={() => dispatch(followUserThunkCreator(user.id))}
                     disabled={isFollowing.some(e => e === user.id)}
                 >Follow</button>}
         </div>

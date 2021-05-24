@@ -17,6 +17,8 @@ export type ProfilePropsType = {
 const Profile: React.FC<ProfilePropsType> = (props) => {
     // если у нас профиль еще пустой, тогда показываем прелоудер
     // Object.keys(props.profile).length === 0 ||
+    console.log(props.profile)
+
     if (props.profile ===  null) {
         // isFetching={props.isFetching}
         return <Preloader  />;

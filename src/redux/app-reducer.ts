@@ -33,9 +33,9 @@ export const initializeApp = (): BaseThunkType<ActionsTypes | AuthActionsType> =
     // посылаем запрос на аус ми
     let setUserPromise = await dispatch(setUserThunkCreator())
     let newUsers = await usersAPI.getUsers(1,3)
-    let setNewUsers = await dispatch(actionsAside.setNewUsers(newUsers.items))
+    dispatch(actionsAside.setNewUsers(newUsers.items))
     // наше приложение авторизировано, если у нас выполнились все пропимы
-    Promise.all([setUserPromise, setNewUsers])
+    Promise.all([setUserPromise, newUsers])
         .then(() => dispatch(actions.initializedSuccess()))
 }
 

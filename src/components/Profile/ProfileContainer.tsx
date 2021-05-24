@@ -35,6 +35,7 @@ class ProfileContainer extends React.PureComponent<PropsTypeProfileCont> {
         if (!userId) {
             // если айди нет у ури параметре, ищем его в пропсах
             userId = this.props.userId
+
             // если в пропсах не нашли, тогда перенаправляем нас на логин. это делается с помощью виз роутер.
             // запихиваем путь в урлу
             if (!userId) this.props.history.push('/login')

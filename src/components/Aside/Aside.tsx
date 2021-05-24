@@ -19,6 +19,9 @@ const Aside: React.FC<PropsAsideType> = ({favUsers}) => {
                     <NavLink to="/dialogs" activeClassName={s.active}>Messages</NavLink>
                 </li>
                 <li className={s.item}>
+                    <NavLink to="/chat" activeClassName={s.active}>Dev Chat</NavLink>
+                </li>
+                <li className={s.item}>
                     <NavLink to="/news" activeClassName={s.active}>News</NavLink>
                 </li>
                 <li className={s.item}>

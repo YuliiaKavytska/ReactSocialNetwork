@@ -98,7 +98,6 @@ export const setNewStatusThunkCreator = (status: string): ThunkType => async (di
         const data = await profileAPI.updateStatus(status)
         if (data.resultCode === ResponseResultCodes.Success) dispatch(actions.setNewStatus(status))
     } catch (error) {
-        debugger
         // обработка ошибки. персонализированый алерт. диспачим наличине ошибки в стор.
         // делаем новую санку которая будет включать ошибку и по таймеру ее выключать
     }
